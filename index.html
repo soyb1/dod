@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOD Mining</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Mine DOD</h1>
+        <p id="balance">Balance: 0.00000 DOD</p>
+        <button id="mine-btn">⛏️ Mine</button>
+        <script>
+            const user_id = window.Telegram.WebApp.initDataUnsafe.user?.id || "demo_user";
+
+            document.getElementById("mine-btn").onclick = async () => {
+                const res = await fetch("/mine", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id })
+                });
+                const data = await res.json();
+                document.getElementById("balance").textContent = "Balance: " + data.balance.toFixed(5) + " DOD";
+            };
+        </script>
+    </div>
+</body>
+</html>
